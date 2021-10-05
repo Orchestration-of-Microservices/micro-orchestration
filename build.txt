@@ -1,0 +1,18 @@
+#build services
+docker build -t service1:0.1 -f services/service1/Dockerfile .
+docker build -t service2:0.1 -f services/service2/Dockerfile .
+
+#create deployments
+kubectl apply -f k8s/service1/service1-deployment.yaml
+kubectl apply -f k8s/service2/service2-deployment.yaml
+
+#create services
+kubectl apply -f k8s/service1/service1-service.yaml
+kubectl apply -f k8s/service2/service2-service.yaml
+
+#create ingress
+kubectl apply -f k8s/ingress.yaml
+
+#test services
+curl $(minikube ip)/api/service1
+curl $(minikube ip)/api/service2
