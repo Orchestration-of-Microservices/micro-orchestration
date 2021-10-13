@@ -1,6 +1,11 @@
+eval $(minikube docker-env)
+
 #build services
-docker build -t service1:0.1 -f services/service1/Dockerfile .
-docker build -t service2:0.1 -f services/service2/Dockerfile .
+cd services/service1
+docker build -t service1:0.1 .
+
+cd services/service2
+docker build -t service2:0.1 .
 
 #create deployments
 kubectl apply -f k8s/service1/service1-deployment.yaml
@@ -10,7 +15,11 @@ kubectl apply -f k8s/service2/service2-deployment.yaml
 kubectl apply -f k8s/service1/service1-service.yaml
 kubectl apply -f k8s/service2/service2-service.yaml
 
+kubectl proxy
+
 #create ingress
+minikube addons enable ingress
+
 kubectl apply -f k8s/ingress.yaml
 
 #test services
