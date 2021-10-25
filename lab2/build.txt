@@ -1,0 +1,19 @@
+eval $(minikube docker-env)
+
+#build services
+cd services/service1
+docker build -t service1:0.1 .
+
+cd services/service2
+docker build -t service2:0.1 .
+
+cd services/root-service
+docker build -t root-service:0.1 .
+
+#create infra
+kubectl apply -f k8s
+
+#test services
+curl $(minikube ip)/api/service1
+curl $(minikube ip)/api/service2
+curl $(minikube ip)/api/root-service
