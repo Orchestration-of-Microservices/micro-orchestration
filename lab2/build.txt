@@ -25,3 +25,29 @@ curl http://localhost:8001/api/v1/namespaces/default/services/root-service/proxy
 curl $(minikube ip)/api/service1
 curl $(minikube ip)/api/service2
 curl $(minikube ip)/api/root-service
+
+#break service2
+curl $(minikube ip)/api/service2/untested-request
+
+#demo
+
+1.
+cd test
+go run main.go
+
+2.
+curl $(minikube ip)/api/service2/untested-request
+cd test
+go run main.go
+
+3.
+cd k8s
+kubectl apply -f service1/service1-virtual-service.yaml
+kubectl apply -f service2/service2-virtual-service.yaml
+
+cd test
+go run main.go
+
+4.
+cd k8s
+kubectl apply -f service2/service2-destination-rule.yaml
