@@ -1,5 +1,5 @@
-const http = require('http');
-const { requestListener } = require('./src/app')
+const app = require('./src/app')
 
-const server = http.createServer(requestListener);
-server.listen(3003);
+app.listen(3003, () => {
+    console.log('server running on port 3003')
+});

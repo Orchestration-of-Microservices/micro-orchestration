@@ -1,14 +1,11 @@
-const requestListener = function (req, res) {
-    if (req.url === '/api/service2') {
-        res.writeHead(200);
-        res.write('Hello from second node server');
-    } else {
-        res.writeHead(404);
-    }
-    res.end()
-}
+const express = require('express')
 
-module.exports = {
-    requestListener
-}
+const app = express()
+
+app.get('/api/service2', async (req, res, next) => {
+    res.status(200).send('Hello from second node server').end()
+})
+
+module.exports = app
+
 
