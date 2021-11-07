@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  db:
+    image: "postgres:9.6"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 4ebyrek
+      POSTGRES_DB: gemstone
+      POSTGRES_PORT: 5432
+    ports:
+      - 5432:5432
+    restart: always
+
