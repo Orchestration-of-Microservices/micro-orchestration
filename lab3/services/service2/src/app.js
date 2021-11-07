@@ -20,8 +20,11 @@ app.get('/api/service2', async (req, res, next) => {
 })
 
 app.post('/api/service2/message', async (req, res, next) => {
-    const notificationMessage = req.body.notificationMessage
-    const mobileMessage = req.body.mobileMessage
+
+    console.log('body:', req.body)
+
+    const notificationMessage = req.body.notification
+    const mobileMessage = req.body.mobile
 
     try {
         producer.produce('notification', null, Buffer.from(notificationMessage), 'Stormwind', Date.now());
