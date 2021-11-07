@@ -2,10 +2,13 @@ FROM node:12
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY package*.json ./
 
 RUN npm install --production
+
 RUN npm rebuild
+
+COPY . .
 
 EXPOSE 3003
 
