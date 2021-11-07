@@ -2,7 +2,11 @@ const Kafka = require('node-rdkafka');
 const mailer = require('../mailer')
 const notificationService = require('../services/notification-service')
 
-const notifiactionConsumer = new Kafka.KafkaConsumer({ 'group.id': 'kafka', 'metadata.broker.list': 'localhost:9092' }, {});
+const notifiactionConsumer = new Kafka.KafkaConsumer({
+  'group.id': 'kafka',
+  'metadata.broker.list': `${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`
+}, {});
+
 notifiactionConsumer.connect();
 
 notifiactionConsumer.on('ready', () => {

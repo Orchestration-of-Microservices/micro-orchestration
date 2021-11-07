@@ -1,7 +1,11 @@
 const Kafka = require('node-rdkafka');
 const mobileService = require('../services/mobile-service')
 
-const mobileConsumer = new Kafka.KafkaConsumer({ 'group.id': 'kafka', 'metadata.broker.list': 'localhost:9092' }, {});
+const mobileConsumer = new Kafka.KafkaConsumer({
+  'group.id': 'kafka',
+  'metadata.broker.list': `${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`
+}, {});
+
 mobileConsumer.connect();
 
 mobileConsumer.on('ready', () => {

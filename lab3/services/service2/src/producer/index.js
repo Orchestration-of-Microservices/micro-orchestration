@@ -1,7 +1,7 @@
 const Kafka = require('node-rdkafka');
 
 const producer = new Kafka.Producer({
-    'metadata.broker.list': 'localhost:9092',
+    'metadata.broker.list': `${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`,
     'dr_cb': true
 });
 
