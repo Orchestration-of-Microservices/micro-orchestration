@@ -1,5 +1,5 @@
-const http = require('http');
-const { requestListener } = require('./src/app')
+const app = require('./src/app')
 
-const server = http.createServer(requestListener);
-server.listen(3000);
+app.listen(3000, () => {
+    console.log('server running on port 3000')
+});
