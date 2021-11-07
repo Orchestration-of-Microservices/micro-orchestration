@@ -1,3 +1,5 @@
+const Kafka = require('node-rdkafka');
+
 const producer = new Kafka.Producer({
     'metadata.broker.list': 'localhost:9092',
     'dr_cb': true
