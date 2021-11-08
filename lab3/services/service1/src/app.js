@@ -8,9 +8,6 @@ const app = express()
 require('./utilities/migrations');
 require('./models');
 
-require('./consumers/mobile-consumer')
-require('./consumers/notification-consumer')
-
 app.use(bodyParser.urlencoded({ extended: true, strict: false }));
 app.use(bodyParser.json());
 

@@ -6,8 +6,6 @@ COPY package*.json ./
 
 RUN npm install --production
 
-RUN npm rebuild
-
 COPY . .
 
 EXPOSE 3000

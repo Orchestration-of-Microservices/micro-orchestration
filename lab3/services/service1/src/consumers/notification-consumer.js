@@ -1,30 +1,36 @@
-const Kafka = require('node-rdkafka');
+const { Kafka } = require('kafkajs')
 const mailer = require('../mailer')
 const notificationService = require('../services/notification-service')
+ 
+const kafka = new Kafka({
+  clientId: 'my-app',
+  brokers: [`${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`]
+})
 
-const notifiactionConsumer = new Kafka.KafkaConsumer({
-  'group.id': 'kafka',
-  'metadata.broker.list': `${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`
-}, {});
+const notifiactionConsumer = kafka.consumer({"groupId": "test"})
 
-notifiactionConsumer.connect();
+const run = async () => {
 
-notifiactionConsumer.on('ready', () => {
-  console.log('notification consumer ready...')
-  notifiactionConsumer.subscribe(['notification']);
-  notifiactionConsumer.consume();
-}).on('data', function(data) {
-  console.log(`received message: ${Buffer.from(data.value)}`);
+  await notifiactionConsumer.connect()
+  await notifiactionConsumer.subscribe({ "topic": "notification", "fromBeginning": true })
 
-  const messageBody = JSON.parse(data.value.toString());
+  await notifiactionConsumer.run({
+    eachMessage: async ({ topic, partition, message }) => {
 
-  notificationService.createRecord(messageBody)
-    .catch(err => console.error("Error while creating notification record", { err }));
+      const messageBody = JSON.parse(message.value.toString());
 
-  mailer.sendText(messageBody.to, messageBody.message, messageBody.message)
-    .then(response => console.log("Mail sent", { response }))
-    .catch(err => console.error("Error while sending mail", { err }));
+      console.log({messageBody})
 
-});
+      notificationService.createRecord(messageBody)
+        .catch(err => console.error("Error while creating notification record", { err }));
+  
+      mailer.sendText(messageBody.to, messageBody.message, messageBody.message)
+        .then(response => console.log("Mail sent", { response }))
+        .catch(err => console.error("Error while sending mail", { err }));
 
-module.exports = notifiactionConsumer
+    },
+  })
+
+}
+
+run().catch(console.error)

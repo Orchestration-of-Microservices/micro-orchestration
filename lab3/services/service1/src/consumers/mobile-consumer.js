@@ -1,23 +1,31 @@
-const Kafka = require('node-rdkafka');
+const { Kafka } = require('kafkajs')
 const mobileService = require('../services/mobile-service')
+ 
+const kafka = new Kafka({
+  clientId: 'my-app',
+  brokers: [`${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`]
+})
 
-const mobileConsumer = new Kafka.KafkaConsumer({
-  'group.id': 'kafka',
-  'metadata.broker.list': `${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`
-}, {});
+const mobileConsumer = kafka.consumer({"groupId": "test"})
 
-mobileConsumer.connect();
+const run = async () => {
 
-mobileConsumer.on('ready', () => {
-  console.log('mobile consumer ready...')
-  mobileConsumer.subscribe(['mobile']);
-  mobileConsumer.consume();
-}).on('data', function(data) {
-  console.log(`received message: ${Buffer.from(data.value)}`);
+  await mobileConsumer.connect()
+  await mobileConsumer.subscribe({ "topic": "mobile", "fromBeginning": true })
 
-  mobileService.createRecord(messageBody)
-    .catch(err => console.error("Error while creating mobile record", { err }));
-  
-});
+  await mobileConsumer.run({
+    eachMessage: async ({ topic, partition, message }) => {
 
-module.exports = mobileConsumer
+      const messageBody = JSON.parse(message.value.toString());
+
+      console.log({messageBody})
+
+      mobileService.createRecord(messageBody)
+        .catch(err => console.error("Error while creating mobile record", { err }));
+
+    },
+  })
+
+}
+
+run().catch(console.error)

@@ -32,8 +32,19 @@ app.post('/api/service2/message', async (req, res, next) => {
     const mobileMessage = req.body.mobile
 
     try {
-        producer.produce('notification', null, Buffer.from(JSON.stringify(notificationMessage)), 'Stormwind', Date.now());
-        producer.produce('mobile', null, Buffer.from(JSON.stringify(mobileMessage)), 'Stormwind', Date.now());
+        await producer.send({
+            topic: 'notification',
+            messages: [{
+                value: Buffer.from(JSON.stringify(notificationMessage))
+            }],
+        })
+
+        await producer.send({
+            topic: 'mobile',
+            messages: [{
+                value: Buffer.from(JSON.stringify(mobileMessage))
+            }],
+        })
     } catch (err) {
         console.error('A problem occurred when sending our message');
         console.error(err);
