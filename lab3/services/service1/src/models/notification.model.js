@@ -7,13 +7,7 @@ module.exports = function (sequelize, DataTypes) {
         message: {
             type: DataTypes.TEXT,
             allowNull: true
-        },
-        createdAt: {
-            field: 'created_at',
-            allowNull: false,
-            defaultValue: Sequelize.fn('NOW'),
-            type: Sequelize.DATE
-        },
+        }
     }, {
         updatedAt: false,
         underscored: true,
