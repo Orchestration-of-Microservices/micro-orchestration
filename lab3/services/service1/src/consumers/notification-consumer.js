@@ -10,6 +10,7 @@ const kafka = new Kafka({
 const notifiactionConsumer = kafka.consumer({"groupId": "test"})
 
 const run = async () => {
+  console.log('connecting notification consumer...')
 
   await notifiactionConsumer.connect()
   await notifiactionConsumer.subscribe({ "topic": "notification", "fromBeginning": true })

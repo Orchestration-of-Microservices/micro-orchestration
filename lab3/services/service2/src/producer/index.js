@@ -16,7 +16,11 @@ const run = async () => {
         "topics": [{
             "topic" : "notification",
             "numPartitions": 2
-        }, {
+        }]
+    })
+
+    await admin.createTopics({
+        "topics": [{
             "topic" : "mobile",
             "numPartitions": 2
         }]

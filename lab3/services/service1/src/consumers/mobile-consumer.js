@@ -9,7 +9,7 @@ const kafka = new Kafka({
 const mobileConsumer = kafka.consumer({"groupId": "test"})
 
 const run = async () => {
-  console.log('connectiong...')
+  console.log('connecting mobile consumer...')
 
   await mobileConsumer.connect()
   await mobileConsumer.subscribe({ "topic": "mobile", "fromBeginning": true })
