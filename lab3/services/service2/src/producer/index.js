@@ -4,26 +4,28 @@ const kafka = new Kafka({
   clientId: 'my-app',
   brokers: [`172.17.0.2:31092`]
 })
- 
-const run = async () => {
-    const producer = kafka.producer();
-    const admin = kafka.admin()
 
+const producer = kafka.producer();
+const admin = kafka.admin();
+
+const run = async () => {
     await producer.connect();
     await admin.connect()
 
-    admin.createTopics({
-        waitForLeaders: true,
-        topics: [{ topic: 'notification' }],
+    await admin.createTopics({
+        "topics": [{
+            "topic" : "notification",
+            "numPartitions": 2
+        }, {
+            "topic" : "mobile",
+            "numPartitions": 2
+        }]
     })
 
-    admin.createTopics({
-        waitForLeaders: true,
-        topics: [{ topic: 'mobile' }],
-    })
+    await admin.disconnect();
+
 }
 
 run().catch(console.error)
-
 
 module.exports = producer

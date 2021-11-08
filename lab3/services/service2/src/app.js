@@ -31,18 +31,22 @@ app.post('/api/service2/message', async (req, res, next) => {
     const notificationMessage = req.body.notification
     const mobileMessage = req.body.mobile
 
+    const partition = notificationMessage[0] < "N" ? 0 : 1;
+
     try {
         await producer.send({
             topic: 'notification',
             messages: [{
-                value: Buffer.from(JSON.stringify(notificationMessage))
+                "value": Buffer.from(JSON.stringify(notificationMessage)),
+                "partition": partition
             }],
         })
 
         await producer.send({
             topic: 'mobile',
             messages: [{
-                value: Buffer.from(JSON.stringify(mobileMessage))
+                "value": Buffer.from(JSON.stringify(mobileMessage)),
+                "partition": partition
             }],
         })
     } catch (err) {
