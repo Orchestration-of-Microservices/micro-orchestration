@@ -6,7 +6,7 @@ const kafka = new Kafka({
   brokers: [`172.17.0.2:31092`]
 })
 
-const mobileConsumer = kafka.consumer({"groupId": "test"})
+const mobileConsumer = kafka.consumer({"groupId": "mobile-group"})
 
 const run = async () => {
   console.log('connecting mobile consumer...')

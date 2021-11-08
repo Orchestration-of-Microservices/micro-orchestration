@@ -4,16 +4,16 @@ class Mailer {
 
     constructor() {
         this.transport = nodemailer.createTransport({
-            host: 'smtp.rambler.ru',
-            port: 465,
-            secure: true,
+            host: process.env.EMAIL_SMTP,
+            port: process.env.EMAIL_PORT,
+            secure: process.env.EMAIL_SECURE,
             auth: {
-                user: 'tvv13',
-                pass: '8eLsh0hQMg'
+                user: process.env.EMAIL_ACCOUNT,
+                pass: process.env.EMAIL_PASSWORD
             }
         });
 
-        this.from = 'tvv13@rambler.ru'
+        this.from = process.env.EMAIL_FROM
     }
 
     sendHtml(to, subject, what) {

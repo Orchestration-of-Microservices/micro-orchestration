@@ -7,7 +7,7 @@ const kafka = new Kafka({
   brokers: [`172.17.0.2:31092`]
 })
 
-const notifiactionConsumer = kafka.consumer({"groupId": "test"})
+const notifiactionConsumer = kafka.consumer({"groupId": "notification-group"})
 
 const run = async () => {
   console.log('connecting notification consumer...')
@@ -22,10 +22,13 @@ const run = async () => {
 
       console.log({messageBody})
 
+      const subject = `Notification service`
+      const testMessage = `Dear user, you have received new message: ${messageBody.message}`
+
       notificationService.createRecord(messageBody)
         .catch(err => console.error("Error while creating notification record", { err }));
   
-      mailer.sendText(messageBody.to, messageBody.message, messageBody.message)
+      mailer.sendText(messageBody.to, subject, testMessage)
         .then(response => console.log("Mail sent", { response }))
         .catch(err => console.error("Error while sending mail", { err }));
 
