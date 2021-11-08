@@ -2,17 +2,28 @@ const { Kafka } = require('kafkajs')
  
 const kafka = new Kafka({
   clientId: 'my-app',
-  brokers: [`${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`]
+  brokers: [`172.17.0.2:31092`]
 })
  
-const producer = kafka.producer();
+const run = async () => {
+    const producer = kafka.producer();
+    const admin = kafka.admin()
 
-(async () => {
-    try {
-        await producer.connect();
-    } catch(error) {
-        console.log(error)
-    }
-})()
+    await producer.connect();
+    await admin.connect()
+
+    admin.createTopics({
+        waitForLeaders: true,
+        topics: [{ topic: 'notification' }],
+    })
+
+    admin.createTopics({
+        waitForLeaders: true,
+        topics: [{ topic: 'mobile' }],
+    })
+}
+
+run().catch(console.error)
+
 
 module.exports = producer

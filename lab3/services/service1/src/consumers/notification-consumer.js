@@ -4,7 +4,7 @@ const notificationService = require('../services/notification-service')
  
 const kafka = new Kafka({
   clientId: 'my-app',
-  brokers: [`${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`]
+  brokers: [`172.17.0.2:31092`]
 })
 
 const notifiactionConsumer = kafka.consumer({"groupId": "test"})
