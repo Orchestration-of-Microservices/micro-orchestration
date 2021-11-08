@@ -23,7 +23,6 @@ const run = async () => {
     })
 
     await admin.disconnect();
-
 }
 
 run().catch(console.error)
