@@ -20,12 +20,13 @@ const run = async () => {
 
       const messageBody = JSON.parse(message.value.toString());
 
-      console.log({messageBody})
+      console.log('Notification consumer message', {messageBody})
 
       const subject = `Notification service`
       const testMessage = `Dear user, you have received new message: ${messageBody.message}`
 
       notificationService.createRecord(messageBody)
+        .then(() => 'Notification database record created')
         .catch(err => console.error("Error while creating notification record", { err }));
   
       mailer.sendText(messageBody.to, subject, testMessage)

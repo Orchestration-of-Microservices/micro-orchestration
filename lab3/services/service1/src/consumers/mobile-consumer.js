@@ -20,13 +20,14 @@ const run = async () => {
 
       const messageBody = JSON.parse(message.value.toString());
 
-      console.log({messageBody})
+      console.log('Mobile consumer message', {messageBody})
 
       mobileService.createRecord(messageBody)
+        .then(() => 'Mobile database record created')
         .catch(err => console.error("Error while creating mobile record", { err }));
 
-      twilioService.sendSms('+380666751205', 'hello world from twilio')
-        .then(response => console.log("Sms was sent", { response }))
+      twilioService.sendSms('+380997363950', 'hello world from twilio')
+        .then(() => console.log("Sms was sent to +380997363950"))
         .catch(err => console.error("Error while sending sms", { err }));
     },
   })
