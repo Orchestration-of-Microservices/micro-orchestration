@@ -31,7 +31,7 @@ app.post('/api/service2/message', async (req, res, next) => {
     const notificationMessage = req.body.notification
     const mobileMessage = req.body.mobile
 
-    const partition = notificationMessage[0] < "N" ? 0 : 1;
+    const partition = notificationMessage.to[0] < "N" ? 0 : 1;
 
     try {
         await producer.send({
