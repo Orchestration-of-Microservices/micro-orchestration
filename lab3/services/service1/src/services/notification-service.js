@@ -4,7 +4,7 @@ class NotificationService {
     constructor() {}
 
     async createRecord(payload) {
-        return Notification.create(payload)
+        return await Notification.create(payload)
     }
 
 }

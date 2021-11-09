@@ -4,7 +4,7 @@ class MobileService {
     constructor() {}
 
     async createRecord(payload) {
-        return Mobile.create(payload)
+        return await Mobile.create(payload)
     }
 
 }
