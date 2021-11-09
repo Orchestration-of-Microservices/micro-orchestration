@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
     const Mobile = sequelize.define('Mobile', {
-        to: {
+        recepient: {
             type: DataTypes.STRING,
             allowNull: false
         },

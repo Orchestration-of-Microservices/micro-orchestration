@@ -28,7 +28,7 @@ const run = async () => {
       notificationService.createRecord(messageBody)
         .catch(err => console.error("Error while creating notification record", { err }));
 
-      mailer.sendText(messageBody.to, subject, testMessage)
+      mailer.sendText(messageBody.recepient, subject, testMessage)
         .then(response => console.log("Mail sent", { response }))
         .catch(err => console.error("Error while sending mail", { err }));
 

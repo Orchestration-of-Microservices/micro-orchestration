@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
     const Notification = sequelize.define('Notification', {
-        to: {
+        recepient: {
             type: DataTypes.STRING,
             allowNull: false
         },
