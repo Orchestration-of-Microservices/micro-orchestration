@@ -1,41 +1,27 @@
 const express = require('express')
-const httpClientHelper = require('./shared/httpClientHelper')
 const configService = require('./services/config.service')
-
-await configService.storeVariablesInMemory()
+const vaultService = require('./services/vault.service')
 
 const app = express()
 
-app.get('/api/auth-service/token', async (req, res, next) => {
-
+app.post('/api/auth-service/share', async (req, res, next) => {
     try {
-        const serverResponses = await Promise.all([
-            httpClientHelper.load('http://service1-service/api/service1'),
-            httpClientHelper.load('http://service2-service/api/service2')    
-        ])
-    
-        res.json(serverResponses)
-    
-    } catch(error) {
-        next(error)
+        await configService.shareSecrets()
+    } catch (err) {
+        console.error('A problem occurred when sending our message');
+        console.error(err);
     }
 
+    res.status(200).send('Secrets send').end()
 })
 
-app.get('/api/auth-service/config', async (req, res, next) => {
-
+app.get('/api/auth-service/secrets', async (req, res, next) => {
     try {
-        const serverResponses = await Promise.all([
-            httpClientHelper.load('http://service1-service/api/service1'),
-            httpClientHelper.load('http://service2-service/api/service2')    
-        ])
-    
-        res.json(serverResponses)
-    
+        const secrets = await vaultService.getConfig()
+        res.json(secrets)
     } catch(error) {
         next(error)
     }
-
 })
 
 module.exports = app

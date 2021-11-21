@@ -1,19 +1,22 @@
 const vaultService = require('./vault.service')
+const producer = require('../producer/index')
 
 class ConfigService {
 
-  async storeVariablesInMemory() {
-    global.config = {}
-    global.config.app = await vaultService.getConfig('app')
-    global.config.gmail = await vaultService.getConfig('gmail')
-    global.config.aws = await vaultService.getConfig('aws')
-    global.config.stripe = await vaultService.getConfig('stripe')
-    global.config.sendgrid = await vaultService.getConfig('sendgrid')
-    global.config.mongo = await vaultService.getConfig('mongo')
-    global.config.network = await vaultService.getConfig('network')
-    global.config.jwt = await vaultService.getConfig('jwt')
-    global.config.github = await vaultService.getConfig('github')
- }
+  async shareSecrets() {
+    const secrets = await vaultService.getConfig()
+    console.log({secrets})
+
+    await producer.send({
+        topic: 'secrets',
+        messages: [{
+            "value": Buffer.from(JSON.stringify(secrets)),
+            "partition": 0
+        }],
+    })
+
+  }
+
 }
 
 module.exports = new ConfigService()

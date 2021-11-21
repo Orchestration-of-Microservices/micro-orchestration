@@ -17,7 +17,7 @@ const twilioService = (options = { twilioApiSid, twilioApiKey, twilioFrom }) => 
 }
 
 module.exports = twilioService({
-  twilioApiSid: process.env.TWILIO_API_SID,
-  twilioApiKey: process.env.TWILIO_API_KEY,
-  twilioFrom: process.env.TWILIO_FROM
+  twilioApiSid: global.TWILIO_API_SID,
+  twilioApiKey: global.TWILIO_API_KEY,
+  twilioFrom: global.TWILIO_FROM
 });

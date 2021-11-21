@@ -1,26 +1,26 @@
 module.exports = {
   development: {
-    username: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-    host: process.env.DATABASE_HOST,
-    port: process.env.DATABASE_PORT,
+    username: global.DATABASE_USER,
+    password: global.DATABASE_PASSWORD,
+    database: global.DATABASE_NAME,
+    host: global.DATABASE_HOST,
+    port: global.DATABASE_PORT,
     dialect: 'postgresql'
   },
   test: {
-    username: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-    host: process.env.DATABASE_HOST,
-    port: process.env.DATABASE_PORT,
+    username: global.DATABASE_USER,
+    password: global.DATABASE_PASSWORD,
+    database: global.DATABASE_NAME,
+    host: global.DATABASE_HOST,
+    port: global.DATABASE_PORT,
     dialect: 'postgresql'
   },
   production: {
-    username: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-    host: process.env.DATABASE_HOST,
-    port: process.env.DATABASE_PORT,
+    username: global.DATABASE_USER,
+    password: global.DATABASE_PASSWORD,
+    database: global.DATABASE_NAME,
+    host: global.DATABASE_HOST,
+    port: global.DATABASE_PORT,
     dialect: 'postgresql'
   }
 };

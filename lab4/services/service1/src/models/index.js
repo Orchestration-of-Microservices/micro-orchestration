@@ -5,7 +5,7 @@ const _ = require('lodash');
 
 const db = {};
 const sequelize = new Sequelize(
-  `postgresql://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`, {
+  `postgresql://${global.DATABASE_USER}:${global.DATABASE_PASSWORD}@${global.DATABASE_HOST}:${global.DATABASE_PORT}/${global.DATABASE_NAME}`, {
     logging: false
   }
 );
