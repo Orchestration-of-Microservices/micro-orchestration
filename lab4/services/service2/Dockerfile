@@ -2,10 +2,12 @@ FROM node:12
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY package*.json ./
 
 RUN npm install --production
 
-EXPOSE 3007
+COPY . .
+
+EXPOSE 3003
 
 CMD [ "npm", "start" ]

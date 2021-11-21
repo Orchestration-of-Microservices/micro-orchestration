@@ -6,12 +6,32 @@ spec:
   rules:
     - http:
         paths:
-          - path: /api/auth-service
+          - path: /api/service1
             pathType: Prefix
             backend:
               service:
                 name: service1-service
                 port:
                   number: 80
-
+          - path: /api/service2
+            pathType: Prefix
+            backend:
+              service:
+                name: service2-service
+                port:
+                  number: 80
+          - path: /api/root-service
+            pathType: Prefix
+            backend:
+              service:
+                name: root-service
+                port:
+                  number: 80
+          - path: /api/auth-service
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 80
 
