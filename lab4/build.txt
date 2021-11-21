@@ -25,3 +25,5 @@ curl http://localhost:8001/api/v1/namespaces/default/services/root-service/proxy
 curl $(minikube ip)/api/service1
 curl $(minikube ip)/api/service2
 curl $(minikube ip)/api/root-service
+
+kubectl port-forward vault-0 8200:8200
