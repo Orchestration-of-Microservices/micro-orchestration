@@ -22,6 +22,6 @@ const run = async () => {
     await admin.disconnect();
 }
 
-run().catch(console.error)
+// run().catch(console.error)
 
 module.exports = producer
