@@ -1,7 +1,7 @@
 const enginename = process.env.ENGINENAME || 'secret'
 const hvpath = process.env.HVPATH || 'webapp'
 const token = process.env.TOKEN || 's.iKZxgScRpraU8lGfCh04PHOU'
-const endpoint = process.env.ENDPOINT || 'http://127.0.0.1:8200'
+const endpoint = process.env.ENDPOINT || 'http://172.17.0.2:31421'
 
 const options = { apiVersion: 'v1', endpoint, token };
 
