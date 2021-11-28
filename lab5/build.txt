@@ -27,3 +27,6 @@ curl $(minikube ip)/api/service2
 curl $(minikube ip)/api/root-service
 
 kubectl port-forward vault-0 8200:8200
+
+kubectl port-forward --namespace monitoring service/prometheus-grafana 3000:80
+kubectl get secret --namespace monitoring prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
